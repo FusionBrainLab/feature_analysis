@@ -1,5 +1,5 @@
 
-[![](https://img.shields.io/badge/Project_page-blue)](https://fusionbrainlab.github.io/feature_analysis/) [![arXiv](https://img.shields.io/badge/arXiv-2506.07803-b31b1b.svg)](https://arxiv.org/abs/2506.07803) ![GitHub License](https://img.shields.io/github/license/FusionBrainLab/feature_analysis)
+[![](https://img.shields.io/badge/Project_page-blue)](https://fusionbrainlab.github.io/feature_analysis/) [![arXiv](https://img.shields.io/badge/arXiv-2506.07803-b31b1b.svg)](https://arxiv.org/abs/2506.07803) ![GitHub License](https://img.shields.io/github/license/FusionBrainLab/feature_analysis?_)
 
 # Quick Start
 
