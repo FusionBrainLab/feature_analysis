@@ -6,3 +6,9 @@ coco_subsets/train2017/
 coco_subsets/
 metrics_calculation/precalculated_weights/
 metrics_calculation/rb_swap/.ipynb_checkpoints/
+
+transformed_features_in_vlm/weights
+transformed_features_in_vlm/dataset
+transformed_features_in_vlm/reconstructor/samples/
+transformed_features_in_vlm/experiments/.ipynb_checkpoints/
+transformed_features_in_vlm/reconstructor/checkpoint/

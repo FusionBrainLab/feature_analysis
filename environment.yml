@@ -19,6 +19,8 @@ dependencies:
   - async-lru=2.0.5
   - async-timeout=5.0.1
   - attrs=25.3.0
+  - einops=0.8.1
+  - sentencepiece=0.2.0
   - aws-c-auth=0.7.22
   - aws-c-cal=0.6.15
   - aws-c-common=0.9.23

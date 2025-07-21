@@ -127,44 +127,42 @@ import os
 import json
 from tqdm import tqdm
 from PIL import Image
+import argparse
 
 num_patches_per_side = llm.config.vision_config.image_size // llm.config.vision_config.patch_size
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--mode', type=str, default='val', choices=['train', 'val'])
+parser.add_argument('--batch_size', type=int, default=16)
+parser.add_argument('--max_images', type=int, default=200000, help='max number of images to process. for train recommend 200000, for val recommend 100')
+parser.add_argument('--images_dir', type=str,   required=True)
+
+args = parser.parse_args()
+
 datasets_dir = os.path.join(current_dir, '..' , 'dataset')
-mode = 'val' #'val' #'train'
-batch_size = 16
-coco_train_images_path = '<-- write here train coco image path -->'
-coco_val_images_path = '<-- write here val coco image path -->'
+mode = args.mode
+batch_size = args.batch_size
+max_images = args.max_images
+images_dir = args.images_dir
 
 vision_model_name_for_path = '-'.join(vision_model_name.split('/'))
-train_max_images = 200000
-train_images_dir = coco_train_images_path # len of train2017 = 115404
-train_features_dir = f'{datasets_dir}/{vision_model_name_for_path}/tensors'
-train_features_json = f'{datasets_dir}/{vision_model_name_for_path}/map.json'
-
-val_max_images = 100
-val_images_dir = coco_train_images_path # len of val2017 = 4515
-val_features_dir = f'{datasets_dir}/{vision_model_name_for_path}/tensors_val'
-val_features_json = f'{datasets_dir}/{vision_model_name_for_path}/map_val.json'
-
-image_feature_map = {}
 
 if mode == 'train':
-    max_images = train_max_images
-    images_dir = train_images_dir
-    features_dir = train_features_dir
-    features_json = train_features_json
-    image_names = os.listdir(images_dir)[:max_images]
-    os.makedirs(features_dir, mode=0o777, exist_ok=True)
+    features_dir = f'{datasets_dir}/{vision_model_name_for_path}/tensors'
+    features_json = f'{datasets_dir}/{vision_model_name_for_path}/map.json'
 elif mode == 'val':
-    max_images = val_max_images
-    images_dir = val_images_dir
-    features_dir = val_features_dir
-    features_json = val_features_json
-    image_names = os.listdir(images_dir)[:max_images]
-    os.makedirs(features_dir, mode=0o777, exist_ok=True)
+    features_dir = f'{datasets_dir}/{vision_model_name_for_path}/tensors_val'
+    features_json = f'{datasets_dir}/{vision_model_name_for_path}/map_val.json'
 else:
     raise Exception
+
+image_names = os.listdir(images_dir)
+image_names = [ image_name for image_name in image_names if image_name.endswith('.jpg') or image_name.endswith('.png') or image_name.endswith('.jpeg') ]
+image_names = image_names[:max_images]
+
+os.makedirs(features_dir, mode=0o777, exist_ok=True)
+
+image_feature_map = {}
 
 with torch.inference_mode(), torch.no_grad():
 
@@ -210,3 +208,6 @@ with torch.inference_mode(), torch.no_grad():
 
     with open(features_json, 'w') as config:
         json.dump(image_feature_map, config)
+
+print("Features saved to: ", features_dir)
+print("Map saved to: ", features_json)
