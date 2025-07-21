@@ -12,3 +12,4 @@ transformed_features_in_vlm/dataset
 transformed_features_in_vlm/reconstructor/samples/
 transformed_features_in_vlm/experiments/.ipynb_checkpoints/
 transformed_features_in_vlm/reconstructor/checkpoint/
+transformed_features_in_vlm/experiments/images/

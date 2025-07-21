@@ -17,5 +17,6 @@ python reconstructor/train_feature_to_image.py --n_gpu 4 --batch_size 32
 
 3. Explore Jupyter Notebooks
 
-* `experiments/default_understanding.ipynb` - default VLLM understanding of reconstructed images
-* `experiments/rgb-to-bgr_understanding.ipynb` - VLLM understanding of reconstructed images with RGB to BGR transformation
+Run notebooks in following order:
+1. `experiments/default_understanding.ipynb` - default VLLM understanding of reconstructed images
+2. `experiments/rgb-to-bgr_understanding.ipynb` - VLLM understanding of reconstructed images with RGB to BGR transformation
