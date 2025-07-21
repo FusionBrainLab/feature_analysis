@@ -66,7 +66,7 @@ def draw_in_out_cos(images,
     ncols = 4
     nrows = examples
     fig, axes = plt.subplots(ncols=ncols, nrows=nrows, figsize=(ncols * block_size, nrows * block_size))
-    
+
     for i in range(examples):
         ###############################################################################
         image = images[i]
@@ -386,7 +386,7 @@ def main(args):
     dataset = FeaturesDataset(args.features_json_path, mode='train', image_processor=load_from_pil, side_size=side_size)
     eval_dataset = FeaturesDataset(args.val_features_json_path, mode='val', image_processor=load_from_pil, side_size=side_size)
     sampler = dist.data_sampler(dataset, shuffle=True, distributed=args.distributed)
-    loader = DataLoader(dataset, batch_size=32 // args.n_gpu, sampler=sampler, num_workers=16) #32
+    loader = DataLoader(dataset, batch_size=args.batch_size // args.n_gpu, sampler=sampler, num_workers=16) #32
     
     model = VQVAE(vision_tower_name, cache_dir).to(device)
     calculat_num_parameters(model)
@@ -436,6 +436,7 @@ if __name__ == "__main__":
     
     # data parameters
     parser.add_argument("--device", type=str, default='cuda')
+    parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--side_size", type=int, default=512)
 
     # cache dir for image_processor
