@@ -1,18 +1,18 @@
-In our work, we showed that it is possible to train a reconstructor that will, given features, obtain images corresponding to these features. Using this reconstructor, we explored some interesting properties of the feature space. For example, we showed that given features of the original image, it is possible to obtain features corresponding to the same image, but with swapped channels.
+In this work, we demonstrated that it is possible to train a model capable of reconstruct images from their corresponding feature representations. Using this reconstructor, we explored several interesting properties of the feature space. For example, we showed that by manipulating the features of an original image, it is possible to obtain features representing the same image but with permuted color channels.
 
-In this case, the question may arise whether the reconstructed image really reflects reality, that is, whether we can conclude that the change in colors in the reconstructed image corresponds to a change in the properties of the transformed features, and is not related to the reconstruction process.
+This raises an important question: Does the reconstructed image truly reflect reality? In other words, can we conclude that the color shifts in the reconstructed image result from modifications in the feature space rather than being artifacts of the reconstruction process?
 
-For this, we decided to do a cross-check. We took the VLM and checked what would happen if we inserted transformed features into it. If using orthogonal rotation in the feature space it is indeed possible to obtain features corresponding to the same image, but with swapped channels, then when answering the question "what color is some object" vlm will have to name not the color in the initial image, but the color obtained after swapping the channels.
+To verify this, we performed a cross-check. We took a Vision-Language Model (VLM) and tested how it responds when fed transformed features. If an orthogonal rotation in the feature space indeed produces features corresponding to the same image but with swapped channels, then when answering the question "What color is this object?", the VLM should name the post-swap colors rather than the original ones.
 
-In order to provide a numerical result in the work, we came up with a test. Vlm is given a picture consisting of a single-color background and a single-color figure. Both the background and the figure can be of three colors: red, green, and blue. After which it is asked what color the background is and what color the figure is. The answer is counted if both colors are named correctly.
+To provide quantitative results, we designed a test. The VLM was presented with an image consisting of a solid-color background and a solid-color shape, both of which could be red, green, or blue. The model was then asked to identify the colors of the background and the shape. An answer was considered correct only if both colors were named accurately.
 
-We conducted two experiments.
+We conducted two experiments:
 
-1. In the first case, we gave vlm the test described above to solve, without changing the features of the image in any way. In this setting, vlm coped with the task in 100% of cases. The result can be found in the file `experiments/default_understanding.ipynb`.
+Baseline test: The VLM was given the original images without any feature modifications. In this setting, it achieved 100% accuracy.  The result can be found in the file `experiments/default_understanding.ipynb`.
 
-2. In the second variant, we fed LLM image features after orthogonal transformation, hoping that LLM would now start seeing red where there was blue, blue where there was red, and the green channel would remain untouched. And our hopes were justified! In 85% of cases, VLM really did start seeing red where there used to be blue, and blue where there used to be red. The result can be found in the file `experiments/rgb-to-bgr_understanding.ipynb`
+Feature transformation test: The VLM was fed image features after an orthogonal transformation designed to swap the red and blue channels while leaving the green channel unchanged. Our hypothesis was confirmed—in 85% of cases, the VLM indeed perceived red where blue was originally present and blue where red had been, while green remained unaffected. The result can be found in the file `experiments/rgb-to-bgr_understanding.ipynb`
 
-Thus, cross-checking confirmed our assumption.
+Thus, the cross-validation confirmed our assumption.
 
 
 1. Generate Features Dataset
