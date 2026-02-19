@@ -4,7 +4,7 @@
 # Quick Start
 
 
-A quick start guide and additional materials are available on our [**project page**](https://fusionbrainlab.github.io/feature_analysis/). To learn more, refer to our [**arXiv preprint**](https://arxiv.org/abs/2506.07803).
+A quick start guide and additional materials are available on our [**project page**](https://fusionbrainlab.github.io/Feature-Inversion-Lens/). To learn more, refer to our [**arXiv preprint**](https://arxiv.org/abs/2506.07803).
 
 ---
 
